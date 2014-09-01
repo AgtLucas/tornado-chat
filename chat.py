@@ -14,7 +14,7 @@ from tornado import gen
 from tornado.options import define, options, parse_command_line
 
 # define("port", default=8888, help="run on the given port", type=int)
-port = int(os.environ.get('PORT', 33507))
+port = int(os.environ.get('PORT', 8080))
 
 
 class MessageBuffer(object):
@@ -129,7 +129,7 @@ def main():
       (r"/a/message/new", MessageNewHandler),
       (r"/a/message/updates", MessageUpdatesHandler),
     ],
-    cookie_secret=random.randint(1000000000),
+    cookie_secret=random.randint(1, 1000000000),
     login_url="/auth/login",
     template_path=os.path.join(os.path.dirname(__file__), "templates"),
     static_path=os.path.join(os.path.dirname(__file__), "static"),
