@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tornado Chat</title>
+  <link rel="stylesheet" type="text/css" href="{{ static_url("app.css") }}">
+</head>
+<body>
+
+<header class="main-header">
+  <nav class="site-nav">
+    <p><strong>{{ current_user["name"] }}</strong></p>
+    <a href="/auth/logout">{{ _("Sign out") }}</a>
+  </nav>
+</header>
+
+<main class="main-container">
+  <section class="messages-container">
+    {% for message in messages %}
+      {% module Template("message.html", message=message) %}
+    {% end %}
+  </section>
+
+  <section class="chat-input">
+    <form action="/a/message/new" method="post" id="messageform">
+      <input type="text" name="body" id="message">
+      <button type="submit">Enviar</button>
+      <input type="hidden" name="next" value="{{ request.path }}">
+      {% module xsrf_form_html() %}
+    </form>
+  </section>
+</main>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="{{ static_url("app.js") }}"></script>
+</body>
+</html>
